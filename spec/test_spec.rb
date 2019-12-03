@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
+require 'airapp/api/application'
 require 'rack/test'
 
-RSpec.describe 'API' do
+RSpec.describe Airapp::API::Application do
   subject(:response) { get '/' }
 
   include Rack::Test::Methods
 
-  let(:app) {}
+  let(:app) { Airapp::API::Application }
 
-  specify do
-    expect(response.status).to eq 200
-    expect(response.body).to eq <<~JSON
-      [{"id":1,"number":"ticket#1"},{"id":2,"number":"ticket#2"}]
-    JSON
+  describe 'GET /' do
+    specify do
+      expect(response.status).to eq 200
+      expect(response.body).to eq <<~JSON.strip
+        [{"id":1,"number":"ticket1"},{"id":2,"number":"ticket2"}]
+      JSON
+    end
   end
 end
